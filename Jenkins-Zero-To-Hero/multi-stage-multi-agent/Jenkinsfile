@@ -1,6 +1,5 @@
 pipeline {
   agent none
-
   stages {
     stage('Back-end') {
       agent {
@@ -10,26 +9,12 @@ pipeline {
         sh 'mvn --version'
       }
     }
-
     stage('Front-end') {
       agent {
         docker { image 'node:16-alpine' }
       }
       steps {
         sh 'node --version'
-      }
-    }
-
-    stage('DB') {
-      agent {
-        docker { image 'mysql:latest' }
-      }
-      steps {
-        script {
-          sh '''
-          mysql -uroot -e "SELECT * FROM xyz;" -hlocalhost -pYOURPASSWORD
-          '''
-        }
       }
     }
   }
